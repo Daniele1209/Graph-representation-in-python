@@ -11,7 +11,9 @@ class Graph:
 
     # create a graph: n vertices (0 to n-1) and without edges
     def __init__(self, n):
-
+        self._dict = {}
+        for i in range(n):
+            self._dict[i] = []
         
     # returns all the edges with their associated cost
     def get_edges(self):
@@ -19,7 +21,7 @@ class Graph:
     # function to add an edge using the 2 points: a and b if there is no edge like that yet
     def add_edge(self, a, b, c):
 
-    # function that removes an edge from point a to b if it 
+    # function that removes an edge from point a to b if it
     def delete_edge(self, x, y):
 
     # function that adds a vertex a
