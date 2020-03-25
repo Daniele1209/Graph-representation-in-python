@@ -73,7 +73,11 @@ class Graph:
     def iteartor_inedg(self,v):
 
     # prints the graph like so: a -> b (the cost of the edge)
-    def list_graph(self):
+    def list_graph(self, x):
+            l = []
+            for y in self.__out[x]:
+                l.append(y)
+            return l
 
     # returns an iterable structure for given x
 class Iterator:
