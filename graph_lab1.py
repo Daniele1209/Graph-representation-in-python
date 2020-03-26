@@ -14,7 +14,6 @@ class Graph:
 
     # create a graph: n vertices (0 to n-1) and without edges, and a list for the cost of each edge
     def __init__(self, n):
-
         self._cost = {}
 
         self._dict = {}
