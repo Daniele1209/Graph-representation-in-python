@@ -34,7 +34,10 @@ class Graph:
         #print(self._cost)
 
     # function that removes an edge from point a to b if it
-  #  def delete_edge(self, x, y):
+    def delete_edge(self, x, y):
+        for a in self.parse_all():
+            for b in self.parse_in_n(a):
+
 
     # function that adds a vertex a
   #  def add_vertex(self, a):
