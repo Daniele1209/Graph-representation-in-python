@@ -1,9 +1,15 @@
-1 - get the number of vertices
-2 - iterate the set of vertices
-3 - given two vertices, find out whether there is an edge from the first one to the second one
-4 - get the in degree and the out degree of a specified vertex
-5 - parse (iterate) the set of outbound edges of a specified vertex
-6 - parse the set of inbound edges of a specified vertex
-7 - get the endpoints of an edge specified by an Edge_id
-8 - retrieve or modify the information (the integer) attached to a specified edge
-9 - Create a random graph with specified number of vertices and of edges
+addv - to add a vertex
+adde - to add edge
+delv - delete vertex and all edge connections
+dele - delete edge
+1 - list the graph
+2 - print menu of commands
+3 - get the number of vertices
+4 - iterate the set of vertices
+5 - given two vertices, find out whether there is an edge from the first one to the second one
+6 - get the in degree and the out degree of a specified vertex
+7 - parse (iterate) the set of outbound edges of a specified vertex
+8 - parse the set of inbound edges of a specified vertex
+9 - get the endpoints of an edge specified by an Edge_id
+10 - retrieve or modify the information (the integer) attached to a specified edge
+11 - Create a random graph with specified number of vertices and of edges

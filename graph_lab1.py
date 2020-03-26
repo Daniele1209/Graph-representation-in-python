@@ -4,7 +4,7 @@
 # Languages for implementation: Python
 
 import random
-
+from sty import fg
 
 class Graph:
     """To represent a directed graph, we will use 3 disctionaries: 
@@ -23,9 +23,8 @@ class Graph:
         
     # returns all the edges with their associated cost
     def get_edges(self):
-        for i in self._dict.keys():
-            pass
-
+        for a in self.parse_all():
+            print(a)
 
     # function to add an edge using the 2 points: a and b if there is no edge like that yet
     def add_edge(self, a, b, c):
@@ -43,8 +42,11 @@ class Graph:
 
 
     # returns the number of vertices    
-  #  def count_vertices(self):
-       
+    def count_vertices(self):
+        count = 0
+        for i in self._cost.keys():
+            count += 1
+        return count
     # returns the number of edges   
   #  def count_edges(self):
 
@@ -87,7 +89,8 @@ class Graph:
   #  def set_edge_cost(self, a, b, c):
 
     # returns iterator for verices
- #   def iterator_vertices(self):
+  #  def iterator_vertices(self):
+
 
     # returns iterator for out edges of vertex v
   #  def iterator_outedg(self,v):
@@ -100,7 +103,7 @@ class Graph:
         for x in self.parse_all():
             for y in self.parse_in_n(x):
                 c = self._cost["%s - %s" % (x, y)]
-                print("%s -> %s  cost: %s" % (y, x, c))
+                print(fg(220) + ("%s -> %s  cost: %s" % (y, x, c)) + fg.rs)
 
 
     # returns an iterable structure for given x
@@ -125,27 +128,43 @@ def initMyGraph(ctor):
     f.close()
     return g
 
+def print_ascii_art():
+    f = open("art.txt", "r")
+    content = f.read()
+    print(fg(209) + content + fg.rs)
+    f.close()
+
 def print_menu():
    f = open("commands.txt", "r")
-   print(f)
+   content = f.read()
+   print(fg(45) + content + fg.rs)
+   print()
    f.close()
 
 def run():
+    print_ascii_art()
+    print_menu()
     g = initMyGraph(Graph)
     command = -1
     while(command != "0"):
         command = input(">>> ")
-        g.list_graph()
-        if command == "1":
+      #  if command == "addv":
 
-        #if command == "2":
-        #if command == "3":
+
+        if command == "1":
+            g.list_graph()
+        if command == "2":
+            print_menu()
+        if command == "3":
+            print(g.count_vertices())
         #if command == "4":
-        #if command == "5":
+        if command == "5":
+            g.get_edges()
         #if command == "6":
         #if command == "7":
         #if command == "8":
         #if command == "9":
-
+        # if command == "10":
+        # if command == "11":
 
 run()
