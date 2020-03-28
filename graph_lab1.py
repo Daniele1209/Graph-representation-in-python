@@ -77,9 +77,6 @@ class Graph:
             count += 1
         return count
 
-    # returns the number of edges   
-  #  def count_edges(self):
-
     # returns an iterable with all vertices
     def parse_all(self):
         return self._dict.keys()
@@ -131,15 +128,6 @@ class Graph:
     # function that allows the user to change the cost of an edge from a to b
     def set_edge_cost(self, a, b, c):
         self._cost["%s - %s" %(a,b)] = c
-
-    # returns iterator for verices
-  #  def iterator_vertices(self):
-
-    # returns iterator for out edges of vertex v
-  #  def iterator_outedg(self,v):
-
-    # returns iterator for in edges of vertex v
-  #  def iteartor_inedg(self,v):
 
     # prints the graph like so: a -> b (the cost of the edge)
     def list_graph(self):
