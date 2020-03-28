@@ -21,27 +21,33 @@ class Graph:
             self._dict[i] = []
         
     # returns all the edges with their associated cost
-    def get_edges(self):
+    def get_verices(self):
         for a in self.parse_all():
             print(a)
 
     # function to add an edge using the 2 points: a and b if there is no edge like that yet
     def add_edge(self, a, b, c):
-        self._dict[a].append(b)
+        if a in self._dict.keys() and (b not in self.parse_out_n(a)):
+            self._dict[a].append(b)
         #the cost of the edge
-        self._cost["%s - %s" %(b,a)] = []
-        self._cost["%s - %s" %(b,a)].append(c)
-        #print(self._cost)
+            self._cost["%s - %s" %(a,b)] = []
+            self._cost["%s - %s" %(a,b)].append(c)
+            print(self._cost)
+        else:
+            print(fg(124) + "Edge already exists !" + fg.rs)
 
     # function that removes an edge from point a to b if it
-    def delete_edge(self, x, y):
-        for a in self.parse_all():
-            for b in self.parse_in_n(a):
-
+    def delete_edge(self, a, b):
+        if a in self.parse_all():
+            if b in self.parse_out_n(a):
+                
 
     # function that adds a vertex a
-  #  def add_vertex(self, a):
-
+    def add_vertex(self, a):
+        if a not in self._dict.keys():
+            self._dict[a] = []
+        else:
+            print(fg(124) + "Vertex already exists !" + fg.rs)
 
     # returns the number of vertices    
     def count_vertices(self):
@@ -103,14 +109,10 @@ class Graph:
     # prints the graph like so: a -> b (the cost of the edge)
     def list_graph(self):
         for x in self.parse_all():
-            for y in self.parse_in_n(x):
+            for y in self.parse_out_n(x):
                 c = self._cost["%s - %s" % (x, y)]
-                print(fg(220) + ("%s -> %s  cost: %s" % (y, x, c)) + fg.rs)
+                print(fg(220) + ("%s -> %s  cost: %s" % (x, y, c)) + fg.rs)
 
-
-    # returns an iterable structure for given x
-#class Iterator:
- #   def __init__(self,x):
 
 def initMyGraph(ctor):
     """Constructs and returns a hard-coded sample graph.
@@ -150,23 +152,39 @@ def run():
     command = -1
     while(command != "0"):
         command = input(">>> ")
-      #  if command == "addv":
+        if command == "adde":
+            point_a = int(input("Enter point a: "))
+            point_b = int(input("Enter point b: "))
+            cost = int(input("Enter the cost of the edge: "))
+            g.add_edge(point_a, point_b, cost)
+        elif command == "addv":
+            vertex = int(input("Enter a number for the vertex: "))
+            g.add_vertex(vertex)
+        elif command == "dele":
+            point_a = int(input("Enter point a: "))
+            point_b = int(input("Enter point b: "))
 
-
-        if command == "1":
+        elif command == "1":
             g.list_graph()
-        if command == "2":
+        elif command == "2":
             print_menu()
-        if command == "3":
+        elif command == "3":
             print(g.count_vertices())
-        #if command == "4":
-        if command == "5":
-            g.get_edges()
-        #if command == "6":
-        #if command == "7":
-        #if command == "8":
-        #if command == "9":
-        # if command == "10":
-        # if command == "11":
+        elif command == "4":
+            g.get_verices()
+        elif command == "5":
+            point_a = int(input("Enter point a: "))
+            point_b = int(input("Enter point b: "))
+            if g.verify_edge(point_a, point_b):
+                print("There exists an edge from %s to %s !" % (point_a, point_b))
+            else:
+                print("No such edge exists !")
+        #elif command == "6":
+        #elif command == "7":
+        #elif command == "8":
+        #elif command == "9":
+        #elif command == "10":
+        else:
+            print(fg(124) + "Not a valid command !" + fg.rs)
 
 run()

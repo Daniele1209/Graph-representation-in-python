@@ -1,7 +1,7 @@
-addv - to add a vertex
 adde - to add edge
-delv - delete vertex and all edge connections
+addv - to add a vertex
 dele - delete edge
+delv - delete vertex and all edge connections
 1 - list the graph
 2 - print menu of commands
 3 - get the number of vertices
@@ -10,6 +10,5 @@ dele - delete edge
 6 - get the in degree and the out degree of a specified vertex
 7 - parse (iterate) the set of outbound edges of a specified vertex
 8 - parse the set of inbound edges of a specified vertex
-9 - get the endpoints of an edge specified by an Edge_id
-10 - retrieve or modify the information (the integer) attached to a specified edge
-11 - Create a random graph with specified number of vertices and of edges
+9 - retrieve or modify the information (the integer) attached to a specified edge
+10 - Create a random graph with specified number of vertices and of edges
