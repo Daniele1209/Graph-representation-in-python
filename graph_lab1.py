@@ -38,8 +38,9 @@ class Graph:
     def delete_edge(self, a, b):
         if a in self.parse_all():
             if b in self.parse_out_n(a):
-                self._dict[a].pop(b)
+                elem = self._dict[a]
                 del self._cost["%s - %s" %(a,b)]
+                elem.remove(b)
             else:
                 print(fg(124) + "Point b does not exist !" + fg.rs)
         else:
@@ -138,7 +139,7 @@ class Graph:
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("graph_ex.txt", "r")
+    f = open("graph1k.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
@@ -156,6 +157,8 @@ def init_txt_graph(ctor):
 def init_random_graph(ctor, n, m):
     g = ctor(n)
     edges = 0
+    if m > n**2:
+        return 0
     while edges < m:
         point_a = random.randrange(0, n)
         point_b = random.randrange(0, n)
@@ -201,8 +204,11 @@ def run():
             n = int(input("Enter the number of vertices: "))
             m = int(input("Enter the number of edges: "))
             g = init_random_graph(Graph, n, m)
-            print(fg(46) + "Graph generated successfully" + fg.rs)
-            ok = False
+            if g != 0:
+                print(fg(46) + "Graph generated successfully" + fg.rs)
+                ok = False
+            else:
+                print("Invalid random graph !")
         else:
             print(fg(124) + "Not a valid option !" + fg.rs)
 

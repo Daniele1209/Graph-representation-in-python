@@ -11,4 +11,3 @@ delv - delete vertex and all edge connections
 7 - parse (iterate) the set of outbound edges of a specified vertex
 8 - parse the set of inbound edges of a specified vertex
 9 - retrieve or modify the information (the integer) attached to a specified edge
-10 - Create a random graph with specified number of vertices and of edges
