@@ -154,6 +154,32 @@ class Graph:
         nx.draw(G, with_labels=True, node_size=400, alpha=0.3, arrows=True)
         plt.show()
 
+def print_fct(visited_list, root, number_indents):
+    if visited_list == {}:
+        return 0
+    print(("\t" * number_indents) + str(root) + "\n")
+    number_indents = number_indents + 1
+    while len(visited_list[root]):
+        print_fct(visited_list, (visited_list[root])[0], number_indents)
+        (visited_list[root]).pop(0)
+
+def bfs(vertex, graph):
+    visited_list = {}
+    queue = []
+    queue.append(vertex)
+    visited_list[vertex] = []
+    lst = []
+
+    while queue:
+        vert = queue.pop(0)
+        lst = []
+        for v in graph.parse_out_n(vert):
+            if v not in visited_list:
+                queue.append(v)
+                lst.append(v)
+                visited_list[v] = []
+                (visited_list[vert]).append(v)
+    return visited_list
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
@@ -289,9 +315,11 @@ def run():
             else:
                 print(fg(124) + "No such edge exists !" + fg.rs)
         elif command == "show direct":
-
-        elif command == "show "
-
+            g.graph_repres()
+        elif command == "search":
+            vertex_start = int(input("Enter starting vertex: "))
+            dictionary = bfs(vertex_start, g)
+            print_fct(dictionary, vertex_start, 0)
         else:
             print(fg(124) + "Not a valid command !" + fg.rs)
 
