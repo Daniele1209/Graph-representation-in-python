@@ -11,3 +11,5 @@ delv - delete vertex and all edge connections
 7 - parse (iterate) the set of outbound edges of a specified vertex
 8 - parse the set of inbound edges of a specified vertex
 9 - retrieve or modify the information (the integer) attached to a specified edge
+
+show - to show a graphical representation of the graph

@@ -3,14 +3,14 @@
 
 # Languages for implementation: Python
 
+import pandas as pd
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
 import random
 from sty import fg
 
 class Graph:
-    """To represent a directed graph, we will use 3 disctionaries: 
-        1) for vertex to outbound neighbours
-        2) for vertex to inbound neighbours
-        3) edges and their cost """
 
     # create a graph: n vertices (0 to n-1) and without edges, and a list for the cost of each edge
     def __init__(self, n):
@@ -136,6 +136,24 @@ class Graph:
             for y in self.parse_out_n(x):
                 c = self._cost["%s - %s" % (x, y)]
                 print(fg(220) + ("%s -> %s  cost: %s" % (x, y, c)) + fg.rs)
+
+    def graph_repres(self):
+        list_var = {}
+        from_var = []
+        to_var = []
+
+        for i in self._dict.keys():
+            for j in self._dict[i]:
+                from_var.append(i)
+                to_var.append(j)
+
+        list_var['from'] = from_var
+        list_var['to'] = to_var
+        df = pd.DataFrame(list_var)
+        G = nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.DiGraph())
+        nx.draw(G, with_labels=True, node_size=400, alpha=0.3, arrows=True)
+        plt.show()
+
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
@@ -270,6 +288,10 @@ def run():
                 g.set_edge_cost(point_a, point_b, new_cost)
             else:
                 print(fg(124) + "No such edge exists !" + fg.rs)
+        elif command == "show direct":
+
+        elif command == "show "
+
         else:
             print(fg(124) + "Not a valid command !" + fg.rs)
 
