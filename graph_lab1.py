@@ -151,7 +151,7 @@ class Graph:
         list_var['to'] = to_var
         df = pd.DataFrame(list_var)
         G = nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.DiGraph())
-        nx.draw(G, with_labels=True, node_size=400, alpha=0.3, arrows=True)
+        nx.draw(G, with_labels=True, node_size=200, alpha=0.3, arrows=True)
         plt.show()
 
 def print_fct(visited_list, root, number_indents):
@@ -202,7 +202,7 @@ def bfs(vertex, graph):
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("graph_ex.txt", "r")
+    f = open("graph10k.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
