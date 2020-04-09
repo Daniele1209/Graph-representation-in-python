@@ -13,3 +13,4 @@ delv - delete vertex and all edge connections
 9 - retrieve or modify the information (the integer) attached to a specified edge
 
 show - to show a graphical representation of the graph
+search - search for the shortest path between 2 vertices

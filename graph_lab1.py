@@ -163,27 +163,46 @@ def print_fct(visited_list, root, number_indents):
         print_fct(visited_list, (visited_list[root])[0], number_indents)
         (visited_list[root]).pop(0)
 
+def reconstruct_path(start, end, prev, graph):
+    path = []
+    elem = end
+    while elem:
+        path.append(elem)
+        try: elem = prev[elem]
+        except KeyError:
+            break
+    path.reverse()
+    if path[0] == start:
+        return path
+    else:
+        return 0
+
+def solve_bfs(start_vert, end_vert, graph):
+    prev = bfs(start_vert, graph)
+    return reconstruct_path(start_vert, end_vert, prev, graph)
+
+
 def bfs(vertex, graph):
     visited_list = {}
     queue = []
     queue.append(vertex)
     visited_list[vertex] = []
-    lst = []
+    prev = {}
 
     while queue:
         vert = queue.pop(0)
-        lst = []
         for v in graph.parse_out_n(vert):
             if v not in visited_list:
                 queue.append(v)
-                lst.append(v)
                 visited_list[v] = []
+                prev[v] = vert
                 (visited_list[vert]).append(v)
-    return visited_list
+
+    return prev
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("graph1k.txt", "r")
+    f = open("graph_ex.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
@@ -314,12 +333,24 @@ def run():
                 g.set_edge_cost(point_a, point_b, new_cost)
             else:
                 print(fg(124) + "No such edge exists !" + fg.rs)
-        elif command == "show direct":
+        elif command == "show":
             g.graph_repres()
         elif command == "search":
             vertex_start = int(input("Enter starting vertex: "))
-            dictionary = bfs(vertex_start, g)
-            print_fct(dictionary, vertex_start, 0)
+            end_vertex = int(input("Enter ending vertex: "))
+            result = solve_bfs(vertex_start,end_vertex, g)
+            if result != 0:
+
+                for i in range(len(result)):
+                    print(fg(42) + str(result[i]), end = "" + fg.rs)
+                    if i < len(result)-1:
+                        print(fg(42) + " -> ", end = "" + fg.rs)
+                    else:
+                        print()
+                print(fg(36) + "Length: " + str(len(result)-1) + fg.rs)
+
+            else:
+                print("Such path does not exist !")
         else:
             print(fg(124) + "Not a valid command !" + fg.rs)
 
