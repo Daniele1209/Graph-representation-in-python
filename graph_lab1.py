@@ -163,6 +163,14 @@ def print_fct(visited_list, root, number_indents):
         print_fct(visited_list, (visited_list[root])[0], number_indents)
         (visited_list[root]).pop(0)
 
+#Ford's algorithm-----------------------------------------
+
+
+
+#---------------------------------------------------------
+
+#bredth first search -------------------------------------
+
 def reconstruct_path(start, end, prev, graph):
     path = []
     elem = end
@@ -199,6 +207,7 @@ def bfs(vertex, graph):
                 (visited_list[vert]).append(v)
 
     return prev
+#--------------------------------------------------------
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
@@ -276,7 +285,7 @@ def run():
             print(fg(124) + "Not a valid option !" + fg.rs)
 
     command = -1
-    while(command != "0"):
+    while(command != "exit"):
         command = input(fg(135) + ">>> " + fg.rs)
         if command == "adde":
             point_a = int(input("Enter point a: "))
