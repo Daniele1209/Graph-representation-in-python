@@ -9,6 +9,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 from sty import fg
+import math
 
 class Graph:
 
@@ -137,6 +138,13 @@ class Graph:
                 c = self._cost["%s - %s" % (x, y)]
                 print(fg(220) + ("%s -> %s  cost: %s" % (x, y, c)) + fg.rs)
 
+    def edge_list(self):
+        e_list = []
+        for x in self.parse_all():
+            for y in self.parse_out_n(x):
+                e_list.append([x,y])
+        return e_list
+
     def graph_repres(self):
         list_var = {}
         from_var = []
@@ -165,7 +173,39 @@ def print_fct(visited_list, root, number_indents):
 
 #Ford's algorithm-----------------------------------------
 
+def solve_ford(start, end, graph):
+    dist = [math.inf for i in graph.parse_all()]
+    prev = {}
+    dist[start] = 0
+    edges = graph.edge_list()
+    prev_list = []
+    changed = True
+    i = 0
+    #the relaxation process
+    while i < len(graph.parse_all()) - 1 and changed:
+        changed = False
+        for elem in edges:
+            if dist[elem[1]] > (dist[elem[0]] + graph.edge_cost(elem[0], elem[1])):
+                dist[elem[1]] = dist[elem[0]] + graph.edge_cost(elem[0], elem[1])
+                prev[elem[1]] = elem[0]
+                changed = True
+        i += 1
+    #searching for negative cycles
+    for elem in edges:
+        if dist[elem[1]] > (dist[elem[0]] + graph.edge_cost(elem[0], elem[1])):
+            raise Exception()
 
+    #constructing the path list in a reverse way
+    node = end
+    while node != start:
+        prev_list.append(node)
+        node = prev[node]
+    prev_list.append(start)
+    #reversing the list so it will show us the correct path
+    prev_list.reverse()
+
+    #returning the minimum cost and the path
+    return [dist[end],prev_list]
 
 #---------------------------------------------------------
 
@@ -211,7 +251,7 @@ def bfs(vertex, graph):
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("graph10k.txt", "r")
+    f = open("graph_ex.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
@@ -359,7 +399,27 @@ def run():
                 print(fg(36) + "Length: " + str(len(result)-1) + fg.rs)
 
             else:
-                print("Such path does not exist !")
+                print(fg(124) + "Such path does not exist !" + fg.rs)
+        elif command == "ford":
+            vertex_start = int(input("Enter starting vertex: "))
+            end_vertex = int(input("Enter ending vertex: "))
+            try:
+                [dist,result] = solve_ford(vertex_start, end_vertex, g)
+                if len(result) != 1:
+
+                    for i in range(len(result)):
+                        print(fg(42) + str(result[i]), end="" + fg.rs)
+                        if i < len(result) - 1:
+                            print(fg(42) + " -> ", end="" + fg.rs)
+                        else:
+                            print()
+                    print(fg(36) + "Minimum cost: " + str(dist) + fg.rs)
+
+                else:
+                    print(fg(124) + "Such path does not exist !" + fg.rs)
+            except Exception:
+                print(fg(124) + "Negative cost cycle" + fg.rs)
+
         else:
             print(fg(124) + "Not a valid command !" + fg.rs)
 
