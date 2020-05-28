@@ -95,6 +95,33 @@ class Graph:
                 list.append(elem)
         return list
 
+    def make_in_list(self):
+        in_dict = {}
+        for elem in self._dict.keys():
+            in_dict[elem] = self.parse_in_n(elem)
+        return in_dict
+
+    def max_path(self, list, start, end):
+        dist = [-math.inf] * len(self.get_out_dict())
+        prev = [-1] * len(self.get_out_dict())
+        dist[start] = 0
+        path = []
+
+        for elem in list:
+            for el in self.get_out_dict()[elem]:
+                if dist[el] < dist[elem] + self.edge_cost(elem, el):
+                    dist[el] = dist[elem] + self.edge_cost(elem, el)
+                    prev[el] = elem
+        if dist(end) == -math.inf :
+            raise Exception(fg(124) + "No path found :(" + fg.rs)
+        path.append(end)
+        aux_end = end
+        while aux_end != start:
+            path.append(prev[aux_end])
+            aux_end = prev[aux_end]
+
+        return dist[end], path
+
     def parse_cost_all(self):
         return self._cost.keys()
 
@@ -108,6 +135,9 @@ class Graph:
     # returns "True" if a is a vertex, "False" otherwise
     def verify_vertex(self, a):
         return a in self._dict.keys()
+
+    def get_out_dict(self):
+        return self._dict
 
     # returns the in degree of the vertex v
     def degree_in(self, v):
@@ -161,6 +191,31 @@ class Graph:
         G = nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.DiGraph())
         nx.draw(G, with_labels=True, node_size=200, alpha=0.3, arrows=True)
         plt.show()
+
+    def topo_sort_dfs(self, x, ssorted, processed, processing):
+        processing.add(x)
+        for y in self.make_in_list()[x]:
+            if y in processing:
+                return False
+            elif y not in processed:
+                ok = self.topo_sort_dfs(y, ssorted, processed, processing)
+                if not ok:
+                    return False
+        processing.remove(x)
+        ssorted.append(x)
+        processed.add(x)
+        return True
+
+    def topological_sort(self):
+        ssorted = []
+        processed = set()
+        processing = set()
+        for x in range(len(self.get_out_dict())):
+            if x not in processed:
+                ok = self.topo_sort_dfs(x, ssorted, processed, processing)
+                if not ok:
+                    return []
+        return sorted[:]
 
 def print_fct(visited_list, root, number_indents):
     if visited_list == {}:
@@ -279,6 +334,28 @@ def init_random_graph(ctor, n, m):
             g.add_edge(point_a, point_b, cost)
             edges += 1
     return g
+#---------------------------------------------------------
+
+#topologucal sort / dfs topo sort ------------------------
+
+def topo_sort():
+    list = Graph.topological_sort()
+    if list == []:
+        print("The graph is not a DAG")
+    else:
+        print("Topological sort -> " + str(list))
+        start_vertex = int("Enter the starting vertex: ")
+        end_vertex = int("Enter the ending vertex: ")
+        dist, path = Graph.max_path(list, start_vertex, end_vertex)
+        path.reverse()
+
+        for i in range(len(path)):
+            print(fg(42) + str(path[i]), end="" + fg.rs)
+            if i < len(path) - 1:
+                print(fg(42) + " -> ", end="" + fg.rs)
+            else:
+                print()
+        print(fg(36) + "Minimum distance is: " + str(dist) + fg.rs)
 
 def copy_current_graph(graph):
     f = open("graph_copy.txt", "w")
@@ -419,8 +496,10 @@ def run():
                     print(fg(124) + "Such path does not exist !" + fg.rs)
             except Exception:
                 print(fg(124) + "Negative cost cycle" + fg.rs)
-
+        elif command == "10":
+            topo_sort()
         else:
-            print(fg(124) + "Not a valid command !" + fg.rs)
+            if command != "exit" :
+                print(fg(124) + "Not a valid command !" + fg.rs)
 
 run()
