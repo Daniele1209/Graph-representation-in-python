@@ -112,7 +112,7 @@ class Graph:
                 if dist[el] < dist[elem] + self.edge_cost(elem, el):
                     dist[el] = dist[elem] + self.edge_cost(elem, el)
                     prev[el] = elem
-        if dist(end) == -math.inf :
+        if dist[end] == -math.inf:
             raise Exception(fg(124) + "No path found :(" + fg.rs)
         path.append(end)
         aux_end = end
@@ -210,12 +210,13 @@ class Graph:
         ssorted = []
         processed = set()
         processing = set()
+        print(self.get_out_dict())
         for x in range(len(self.get_out_dict())):
             if x not in processed:
                 ok = self.topo_sort_dfs(x, ssorted, processed, processing)
                 if not ok:
                     return []
-        return sorted[:]
+        return ssorted[:]
 
 def print_fct(visited_list, root, number_indents):
     if visited_list == {}:
@@ -338,15 +339,15 @@ def init_random_graph(ctor, n, m):
 
 #topologucal sort / dfs topo sort ------------------------
 
-def topo_sort():
-    list = Graph.topological_sort()
+def topo_sort(graph):
+    list = graph.topological_sort()
     if list == []:
-        print("The graph is not a DAG")
+        print(fg(124) + "The graph is not a DAG !" + fg.rs)
     else:
         print("Topological sort -> " + str(list))
-        start_vertex = int("Enter the starting vertex: ")
-        end_vertex = int("Enter the ending vertex: ")
-        dist, path = Graph.max_path(list, start_vertex, end_vertex)
+        start_vertex = int(input("Enter the starting vertex: "))
+        end_vertex = int(input("Enter the ending vertex: "))
+        dist, path = graph.max_path(list, start_vertex, end_vertex)
         path.reverse()
 
         for i in range(len(path)):
@@ -355,7 +356,7 @@ def topo_sort():
                 print(fg(42) + " -> ", end="" + fg.rs)
             else:
                 print()
-        print(fg(36) + "Minimum distance is: " + str(dist) + fg.rs)
+        print(fg(36) + "Max distance is: " + str(dist) + fg.rs)
 
 def copy_current_graph(graph):
     f = open("graph_copy.txt", "w")
@@ -497,7 +498,10 @@ def run():
             except Exception:
                 print(fg(124) + "Negative cost cycle" + fg.rs)
         elif command == "10":
-            topo_sort()
+            try:
+                topo_sort(g)
+            except Exception as er:
+                print(er)
         else:
             if command != "exit" :
                 print(fg(124) + "Not a valid command !" + fg.rs)
