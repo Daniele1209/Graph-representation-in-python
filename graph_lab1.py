@@ -210,7 +210,6 @@ class Graph:
         ssorted = []
         processed = set()
         processing = set()
-        print(self.get_out_dict())
         for x in range(len(self.get_out_dict())):
             if x not in processed:
                 ok = self.topo_sort_dfs(x, ssorted, processed, processing)
@@ -307,7 +306,7 @@ def bfs(vertex, graph):
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("graph_ex.txt", "r")
+    f = open("small_graph.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
