@@ -226,6 +226,28 @@ def print_fct(visited_list, root, number_indents):
         print_fct(visited_list, (visited_list[root])[0], number_indents)
         (visited_list[root]).pop(0)
 
+#Vertex cover algorithm-----------------------------------
+def vertex_cover(graph):
+    grph = graph.get_out_dict()
+    len = graph.count_vertices()
+    visited = []
+    for i in range(0, len):
+        visited.append(False)
+
+    for u in range(0, len):
+        if not visited[u]:
+            for v in grph[u]:
+                if not visited[v]:
+                    visited[u] = True
+                    visited[v] = True
+                    break
+
+    for i in range(0, len):
+        if visited[i]:
+            print(fg(42) + str(i), end=" " + fg.rs)
+    print()
+
+
 #Ford's algorithm-----------------------------------------
 
 def solve_ford(start, end, graph):
@@ -306,7 +328,7 @@ def bfs(vertex, graph):
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("small_graph.txt", "r")
+    f = open("direct_cover.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
@@ -501,6 +523,8 @@ def run():
                 topo_sort(g)
             except Exception as er:
                 print(er)
+        elif command == "11":
+            vertex_cover(g)
         else:
             if command != "exit" :
                 print(fg(124) + "Not a valid command !" + fg.rs)

@@ -12,6 +12,7 @@ delv - delete vertex and all edge connections
 8 - parse the set of inbound edges of a specified vertex
 9 - retrieve or modify the information (the integer) attached to a specified edge
 10 - performs a topological sorting and finds a highest cost path between two given vertices
+11 - finds a vertex cover of no more than twice the optimal number of vertices
 
 show - to show a graphical representation of the graph
 search - search for the shortest path between 2 vertices
