@@ -328,7 +328,7 @@ def bfs(vertex, graph):
 
 #constructs a graph from the specied txt file
 def init_txt_graph(ctor):
-    f = open("direct_cover.txt", "r")
+    f = open("graph_ex.txt", "r")
     stats = f.readline()
     stat = stats.split(" ")
     vertex_nr = int(stat[0])
